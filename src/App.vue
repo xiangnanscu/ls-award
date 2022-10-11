@@ -3,7 +3,7 @@
 // Check out https://vuejs.org/api/sfc-script-setup.html#script-setup
 // import { ref, reactive, onMounted } from 'vue'
 import { read, utils, writeFileXLSX } from 'xlsx/xlsx.mjs';
-import dataFile from './data.xlsx?b64'
+import { version } from "../package.json"
 
 // console.log({ dataFile })
 const records = ref([])
@@ -52,7 +52,7 @@ onMounted(() => {
 
 <template>
     <div class="bk">
-      <input type="file" @input="readXlsx" /> <span>{{resultText }}</span>
+      版本：{{ version }}<input type="file" @input="readXlsx" /> <span>{{resultText }}</span>
     </div>
 </template>
 
