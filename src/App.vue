@@ -23,11 +23,12 @@ function exportFile() {
   }
   const uniqueRows = Object.values(res)
   console.log({ uniqueRows })
+  uniqueRows.sort((a,b)=>b.分数-a.分数)
   const ws = utils.json_to_sheet(uniqueRows);
   const wb = utils.book_new();
   utils.book_append_sheet(wb, ws, "Data");
   writeFileXLSX(wb, "20大答题数据（去重）.xlsx");
-  resultText.value = `读取到${data.length}人次，去重后有${uniqueRows.length}人参与考试`
+  resultText.value = `读取到${data.length}人次，去重后有${uniqueRows.length}人参与考试，其中80分以上的${uniqueRows.filter(e=>e.分数>=80).length}名`
 }
 async function readXlsx(event) {
   const f = event.target.files[0]
