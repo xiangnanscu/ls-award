@@ -44,10 +44,10 @@ async function readXlsx(event) {
   const wb = read(await f.arrayBuffer());
   const data = utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]]);
   records.value = data.map(e => {
-    let [姓名, 手机号, 身份证, 地址] = e.来源详情.split('/')
+    let [姓名, 手机号, 身份证号, 地址] = e.来源详情.split('/')
     let [_,答题市] = e.来自IP.split(/[()]/)
     let res = {
-      姓名, 手机号, 身份证, 地址, IP: e['来自IP'], 分数: e['总分'], 时间: e.提交答卷时间,  答题市
+      姓名, 手机号, 身份证号, 地址, IP: e['来自IP'], 分数: e['总分'], 时间: e.提交答卷时间,  答题市
 }
     return res
   })
