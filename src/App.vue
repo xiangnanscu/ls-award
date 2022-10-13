@@ -31,13 +31,13 @@ function exportFile() {
   }
   addressRows.value = Object.entries(addressStat).sort((a,b)=>b[1]-a[1]).map(([name, cnt])=>({地名:name, 人数:cnt}))
   const uniqueRows = Object.values(res)
-  console.log({ uniqueRows })
-  uniqueRows.sort((a,b)=>b.分数-a.分数)
-  const ws = utils.json_to_sheet(uniqueRows);
+  uniqueRows.sort((a, b) => b.分数 - a.分数)
+  const exportRows = uniqueRows.filter(a => a.分数 >= 80)
+  const ws = utils.json_to_sheet(exportRows);
   const wb = utils.book_new();
   utils.book_append_sheet(wb, ws, "Data");
-  writeFileXLSX(wb, "20大答题数据（去重）.xlsx");
-  resultText.value = `读取到${data.length}人次，去重后有${uniqueRows.length}人参与考试，其中80分以上的${uniqueRows.filter(e=>e.分数>=80).length}名`
+  writeFileXLSX(wb, "20大答题数据（抽奖名单）.xlsx");
+  resultText.value = `读取到${data.length}人次，去重后有${uniqueRows.length}人参与考试，其中80分以上的${exportRows.length}名`
 }
 async function readXlsx(event) {
   const f = event.target.files[0]
@@ -51,7 +51,6 @@ async function readXlsx(event) {
 }
     return res
   })
-  // console.log(records.value)
   resultText.value = "处理中。。。"
   exportFile()
 }
